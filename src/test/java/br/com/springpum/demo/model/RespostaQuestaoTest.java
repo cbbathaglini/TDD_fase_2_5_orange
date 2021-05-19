@@ -48,15 +48,6 @@ class RespostaQuestaoTest {
 
     }
 
-    @Test
-    void notaNoIntervaloPermitidoDe0ate10(){
-
-        Avaliacao avaliacao2 = new Avaliacao("Avaliação 2");
-        Aluno aluno2 = new Aluno("Carine", "cbbathaglini@gmail.com", 23);
-        RespostaQuestao respostaQuestao2 = new RespostaQuestao(avaliacao2, aluno2, 10);
-        //System.out.println(respostaQuestao2.toString());
-        Assertions.assertTrue(respostaQuestao2.getNota() > 0 && respostaQuestao2.getNota() <= 10);
-    }
 
     @Test
     void notaNaoPodeSerMaiorQue10(){
@@ -70,6 +61,16 @@ class RespostaQuestaoTest {
             Assertions.assertFalse(respostaQuestao.getNota() > 10);
         });
 
+    }
+
+    @Test
+    void notaNoIntervaloPermitidoDe0ate10(){
+
+        Avaliacao avaliacao2 = new Avaliacao("Avaliação 2");
+        Aluno aluno2 = new Aluno("Carine", "cbbathaglini@gmail.com", 23);
+        RespostaQuestao respostaQuestao2 = new RespostaQuestao(avaliacao2, aluno2, 10);
+        //System.out.println(respostaQuestao2.toString());
+        Assertions.assertTrue(respostaQuestao2.getNota() >= 0 && respostaQuestao2.getNota() <= 10);
     }
 
 }
