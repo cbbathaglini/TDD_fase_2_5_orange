@@ -17,12 +17,11 @@ public class RespostaQuestao {
 
     private int nota;
 
-    @Deprecated
+
     public RespostaQuestao() {
     }
 
     public RespostaQuestao(Avaliacao avaliacao, Aluno aluno, int nota) {
-
 
         if (avaliacao == null) {
             throw new IllegalArgumentException("A avaliação não pode ser nula");

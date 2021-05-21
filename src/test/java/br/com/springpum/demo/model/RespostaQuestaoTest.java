@@ -1,7 +1,9 @@
 package br.com.springpum.demo.model;
 
+import br.com.springpum.demo.service.CriadorDeResposta;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.event.annotation.AfterTestExecution;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
@@ -11,40 +13,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RespostaQuestaoTest {
 
+    private Aluno aluno;
+    private Avaliacao avaliacao;
+    //private RespostaQuestao respostaQuestao;
     //@Test(expected = RuntimeException.class) versão 4 ou < do JUnit
+
+    @BeforeEach
+    public void init(){
+        this.aluno = new Aluno("Carine", "cbbathaglini@gmail.com", 23);
+        this.avaliacao = new Avaliacao("Avaliação 1");
+        //this.respostaQuestao = new RespostaQuestao();
+    }
+
     @Test
-    void naoDeveResponderQuestaoSeAvaliacaoNaoExiste() throws RuntimeException{
+    void naoDeveResponderQuestaoSeAvaliacaoNaoExiste() throws IllegalArgumentException {
         //A avaliação não pode ser nula
-        RespostaQuestao respostaQuestao = new RespostaQuestao(null, new Aluno("Carine", "cbbathaglini@gmail.com", 23), 2);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Assertions.assertFalse(respostaQuestao.getAvaliacao() ==  null);
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+             new RespostaQuestao(null, aluno, 3),
+                "A avaliação não pode ser nula!");
     }
 
     @Test
     void naoDeveResponderQuestaoSeAlunoNaoExiste(){
         //O aluno não pode ser nulo
-
-        RespostaQuestao respostaQuestao = new RespostaQuestao(new Avaliacao("Avaliação 1"), null, 2);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Assertions.assertFalse(respostaQuestao.getAluno() ==  null);
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                        new RespostaQuestao(avaliacao, null, 8),
+                "O aluno não pode ser nulo!");
 
     }
 
     @Test
     void notaNaoPodeSerMenorQueZero(){
         //A nota não pode ser menor que zero
-
-        Avaliacao avaliacao = new Avaliacao("Avaliação 2");
-        Aluno aluno = new Aluno("Carine", "cbbathaglini@gmail.com", 23);
-        RespostaQuestao respostaQuestao = new RespostaQuestao(avaliacao, aluno, -1);
-
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Assertions.assertFalse(respostaQuestao.getNota() < 0);
+            new RespostaQuestao(avaliacao, aluno, -1);
         });
-
-
 
     }
 
@@ -52,13 +55,8 @@ class RespostaQuestaoTest {
     @Test
     void notaNaoPodeSerMaiorQue10(){
         //A nota não pode ser maior que 10
-
-        Avaliacao avaliacao = new Avaliacao("Avaliação 2");
-        Aluno aluno = new Aluno("Carine", "cbbathaglini@gmail.com", 23);
-        RespostaQuestao respostaQuestao = new RespostaQuestao(avaliacao, aluno, 12);
-
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Assertions.assertFalse(respostaQuestao.getNota() > 10);
+            new RespostaQuestao(avaliacao, aluno, 12);
         });
 
     }

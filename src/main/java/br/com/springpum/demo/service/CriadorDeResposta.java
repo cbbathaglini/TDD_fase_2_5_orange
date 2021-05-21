@@ -7,8 +7,31 @@ public class CriadorDeResposta {
 
     private RespostaQuestao respostaQuestao;
 
-    public CriadorDeResposta daAvaliacaoXdoAlunoY(Avaliacao avaliacao, Aluno aluno, Integer nota){
-        this.respostaQuestao = new RespostaQuestao(avaliacao,aluno,nota);
+    public CriadorDeResposta() {
+
+    }
+    public CriadorDeResposta init() {
+        this.respostaQuestao = new RespostaQuestao();
         return this;
+    }
+
+    public CriadorDeResposta daAvaliacao(Avaliacao avaliacao){
+        System.out.println(avaliacao.getNome());
+        this.respostaQuestao.setAvaliacao(avaliacao);
+        return this;
+    }
+
+    public CriadorDeResposta doAluno(Aluno aluno){
+        respostaQuestao.setAluno(aluno);
+        return this;
+    }
+
+    public CriadorDeResposta comANota(Integer nota){
+        this.respostaQuestao.setNota(nota);
+        return this;
+    }
+
+    public RespostaQuestao build(){
+        return respostaQuestao;
     }
 }
